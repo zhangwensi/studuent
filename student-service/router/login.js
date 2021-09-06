@@ -65,12 +65,13 @@ login.post('/',koaBody(), async (ctx) => {
             })
         } else {
             ctx.body = {
-                username: username,
+                username: userName,
                 msg: "密码错误"
             }
         }
     } else {
         ctx.body= {
+            code: 201,
             msg: "用户不存在，请联系管理员添加！"
         }
     }

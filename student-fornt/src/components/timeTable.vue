@@ -13,6 +13,7 @@
 
 <script>
 import Timetables from 'timetables'
+import {timeTable} from '../api/class/timetable'
 export default {
   name:"timeTable",
   data() {
@@ -20,18 +21,31 @@ export default {
       timeList:'',//课程表实例
       title:'2021年至2022年度第一学期课程表',
       courList: [
-        ['语文','数学','英语','物理','语文','数学','英语','物理','物理','数学'],
-        ['数学','语文','物理','物理','语文','语文','语文','物理','数学','语文'],
-        ['语文','数学','英语','物理','语文','数学','英语','物理','语文','数学'],
-        ['数学','语文','物理','物理','语文','语文','语文','英语','数学','语文'],
-        ['语文','数学','英语','物理','语文','数学','英语','物理','语文','数学'],
+        ["语文", "数学", "英语", "物理", "语文", "数学", "英语", "物理", "物理", "数学"],
+        ["数学", "语文", "物理", "物理", "语文", "语文", "语文", "物理", "数学", "语文"],
+        ["语文", "数学", "英语", "物理", "语文", "数学", "英语", "物理", "语文", "数学"],
+        ["数学", "语文", "物理", "物理", "语文", "语文", "语文", "英语", "数学", "语文"],
+        ["语文", "数学", "英语", "物理", "语文", "数学", "英语", "物理", "语文", "数学"]
       ],
     }
   },
   mounted(){
-    this.timeList = this.initTimeTables()
+    this.onlyLook()
   },
   methods:{
+    // 获取课程表函数封装
+    getTable() {
+      let data = {
+        username:'admin',
+        class: 1,
+        grade: 1,
+        isCharge: 1
+      }
+      timeTable(data).then(res=>{
+        this.courList = res.data
+        this.timeList = this.initTimeTables()
+      })
+    },
     //初始化课程表
     initTimeTables() {
       let initDom = '#coursesTable'
@@ -66,7 +80,7 @@ export default {
     },
     onlyLook() {
       // 根据sessionStorage中的登录角色 调用接口 进行传值 获取后台数据后重新渲染
-
+      this.getTable()
     },
     reset() {
       // 直接调用指定班级课程表接口
@@ -94,5 +108,8 @@ export default {
 }
 #coursesTable{
   margin-bottom: 10px;
+  .Courses-content {
+    color: #000 !important;
+  }
 }
 </style>

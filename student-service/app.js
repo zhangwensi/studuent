@@ -6,10 +6,10 @@ const SECRET = 'STUDENT' // 前后端定义私钥
 const app = new Koa()
 
 app.use(cors())
-app.use(koajwt({ secret: SECRET }).unless({
-    // 登录接口不需要验证
-    path: [/^\/api\/login/]
-  }))
+// app.use(koajwt({ secret: SECRET }).unless({
+//     // 登录接口不需要验证
+//     path: [/^\/api\/login/]
+//   }))
 
 app.use(router.routes(),router.allowedMethods())
 

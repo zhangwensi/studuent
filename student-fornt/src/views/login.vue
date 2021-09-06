@@ -44,16 +44,14 @@ export default {
         username: this.ruleForm.usename,
         password: this.ruleForm.password
       }
-      console.log(data)
-      login(data).then(res=>{
-        console.log(res)
-      })
-      // this.$refs[ruleForm].validate((valid)=>{
-      //   if(valid) {
-      //     this.$router.push('/home')
-      //     this.$store.commit('app/SET_COLLAPSE_STATUS')
-      //   }
-      // })
+      if(data.username !== null && data.password !== null) {
+        login(data).then(res=>{
+          if(res.code === 200) {
+            this.$router.push('/home')
+            this.$store.commit('app/SET_COLLAPSE_STATUS')
+          }
+        })
+      }
     }
   }
 }
