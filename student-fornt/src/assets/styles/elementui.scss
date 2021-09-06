@@ -1,0 +1,63 @@
+// 覆盖部分elementui
+.login-box {
+  .el-form-item__label::before {
+    content: '' !important;
+  }
+  .el-form-item__label {
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+  }
+}
+
+.el-header {
+  line-height: 60px;
+  border: 0px;
+  background: #545C64;
+  color: #eee;
+  padding-top: 60px;
+}
+
+
+// 左侧导航栏
+.el-menu {
+  border-right: 0px;
+  list-style: none;
+  position: relative;
+  margin: 0;
+  padding-left: 0;
+}
+.el-submenu .el-menu-item {
+  font-size: 14px;
+  color: #fff;
+  padding-left: 46px !important;
+  &.is-active {
+      background-color: rgba(248,108,108,0.2) !important;
+  }
+}
+.el-submenu{
+  &.is-active.is-opened .el-submenu__title {
+      background-color: #f56c6c !important;
+  }
+}
+
+.close {
+  .is-opened {
+      >.el-submenu__title {
+          background-color: #f56c6c !important;
+      }
+  }
+}
+.el-menu--vertical {
+  ul{
+      background-color:#344a5f !important;
+      li:hover {
+          background-color:  rgba(248,108,108,0.2) !important;
+      }
+  }
+}
+
+// 重置表格
+.el-table__body, .el-table__header {
+  width: 100% !important;
+}

@@ -1,0 +1,82 @@
+<template>
+  <div class="login-box">
+    <div class="box-wrapper">
+      <h1>学生管理系统</h1>
+      <el-form :model="ruleForm" status-icon :rules="loginRules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="用户名" prop="usename">
+          <el-input type="text" v-model="ruleForm.usename" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <el-button type="primary" @click="submitForm()">登录</el-button>
+      <el-button @click="resetForm()">重置</el-button>
+    </div>
+  </div>
+</template>
+
+<script>
+import {login} from '../api/login.js'
+export default {
+  name: 'login',
+  data() {
+    return {
+      ruleForm:{
+        usename:'',
+        password:''
+      },
+      loginRules: {
+        usename: [
+          { required: true, trigger: "blur", message: "用户名不能为空" }
+        ],
+        password: [
+          { required: true, trigger: "blur", message: "密码不能为空" }
+        ],
+        // code: [{ required: true, trigger: "change", message: "验证码不能为空" }]
+      },
+    }
+  },
+  methods: {
+    submitForm(){
+      //提交登录请求时要根据后端返回的resCode再跳转 版本后期需补充
+      let data ={
+        username: this.ruleForm.usename,
+        password: this.ruleForm.password
+      }
+      console.log(data)
+      login(data).then(res=>{
+        console.log(res)
+      })
+      // this.$refs[ruleForm].validate((valid)=>{
+      //   if(valid) {
+      //     this.$router.push('/home')
+      //     this.$store.commit('app/SET_COLLAPSE_STATUS')
+      //   }
+      // })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.login-box {
+  background: url('../assets/image/loginbg.jpg') no-repeat fixed;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  .box-wrapper {
+    width: 400px;
+    height: 300px;
+    padding: 0px 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    text-align: center;
+  }
+  h1 {
+    text-align: center;
+    color: cornsilk;
+  }
+}
+</style>
