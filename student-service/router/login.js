@@ -20,9 +20,9 @@ login.post('/',koaBody(), async (ctx) => {
                     resolve(false)
                 }
             })
-        }catch {
+        }catch(e) {
             ctx.body = {
-                msg:'数据库内部错误'
+                msg:'数据库内部错误'+e
             }
         }
     })
@@ -58,13 +58,14 @@ login.post('/',koaBody(), async (ctx) => {
                         } else {
                             resolve(false)
                         }
-                    } catch {
-                        console.log('入库失败')
+                    } catch(e) {
+                        console.log('入库失败'+e)
                     }
                 })
             })
         } else {
             ctx.body = {
+                code: 202,
                 username: userName,
                 msg: "密码错误"
             }
