@@ -2,6 +2,9 @@ const Router = require('koa-router')
 const login = require('./login')
 const timetable = require('./timetable')
 const studentInfo = require('./studentsInfo')
+const sigin = require('./siginComponent')
+const getSiginInfo = require('./getSiginInfo')
+const getData = require('./getData')
 const router = new Router({
     prefix:'/api'
 })
@@ -9,5 +12,9 @@ const router = new Router({
 router.use('/login',login.routes(),login.allowedMethods())
 router.use('/timetable',timetable.routes(),timetable.allowedMethods())
 router.use('/studentInfo',studentInfo.routes(),studentInfo.allowedMethods())
+router.use('/sigin',sigin.routes(),sigin.allowedMethods())
+router.use('/getSiginInfo',getSiginInfo.routes(),getSiginInfo.allowedMethods())
+router.use('/getData',getData.routes(),getData.allowedMethods())
+
 
 module.exports = router
