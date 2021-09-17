@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-row class="table-title">
-      <el-row :span="12"><h3>{{title}}</h3></el-row>
+      <el-row :span="12"><span class="title">{{title}}</span></el-row>
       <div id="coursesTable"></div>
     </el-row>
     <el-row>
-      <el-button size="mini" type="primary" @click.prevent="onlyLook">只看我</el-button>
-      <el-button size="mini" type="wraning" @click.prevent="reset">重置</el-button>
+      <el-button size="mini" type="primary" disabled @click.prevent="onlyLook">只看我</el-button>
+      <el-button size="mini" type="wraning" disabled @click.prevent="reset">重置</el-button>
     </el-row>
   </div>
 </template>
@@ -105,6 +105,10 @@ export default {
 <style lang="scss" scoped>
 .table-title {
   text-align: center;
+}
+.title {
+  font-size: 20px;
+  font-weight: bold;
 }
 #coursesTable{
   margin-bottom: 10px;

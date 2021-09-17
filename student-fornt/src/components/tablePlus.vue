@@ -7,9 +7,9 @@
   <!-- 封装表格 -->
   <!-- 插槽表格 -->
    <el-table
-   :data="initConfig.tableData" border :size="initConfig.size">
+   :data="initConfig.tableList" border :size="initConfig.size" :height="initConfig.tableHeight">
     <!-- 表头 -->
-    <el-table-column v-if="initConfig.checkbox" type="selection" width="55"></el-table-column>
+    <el-table-column fixed v-if="initConfig.checkbox" type="selection" width="55"></el-table-column>
     <template v-for="(item,index) in initConfig.tableTh">
       <el-table-column v-if="item.type ==='index'" :type="item.type" :prop="item.prop" :label="item.label" :key="index" :index="item.callback(index)" width=60 align="center"></el-table-column>
       <el-table-column v-else-if="item.type ==='solt'" :prop="item.prop" :label="item.label" :key="item.label" align="center">
@@ -37,7 +37,7 @@
    </el-table>
    <!-- 分页 -->
    <template v-if="initConfig.pagination ? true : false">
-     <el-row :gutter="20">
+     <el-row class="pagination" :gutter="20">
       <el-col :span="12" :offset="6">
         <div class="tablePg">
             <el-pagination
@@ -73,12 +73,13 @@ export default {
       initConfig:{
         // 表头
         tableTh:[],
-        tableData:[],
+        tableList:[],
         checkbox: true,
         data:{},
         btn:[],
         size:'medium',
-        pagination: true
+        pagination: true,
+        tableHeight: '',
       }
     }
   },
@@ -89,6 +90,7 @@ export default {
         // 初始化表格配置
         this.initTableData()
       },
+      deep: true,
       immediate:true
     }
   },

@@ -8,13 +8,13 @@
       </div>
       <div class="right-side">
         <div class="right-top">
-          <h4>班委信息&课代表</h4>
+          <sapn class="title">班委信息&课代表</sapn>
           <el-button type="warning" size="mini" class="fr">添加成员</el-button>
-          <tablePlus :config="table_config"/>
+          <tablePlus  :config="table_config"/>
         </div>
         <div class="right-buttom">
-          <h5>班级事件纪要</h5>
-          <p>sdasdsadsadasdsadsadsadsadsadsadsa</p>
+          <span class="title">班级事件纪要</span>
+          <p>新学期第一课</p>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default {
           {prop:"name",label:"姓名"},
           {prop:"solt",label:"操作",type:'solt'}
         ],
-        tableData:[
+        tableList:[
           {id:20210903001,role:'班长',class:'1-2',name:'小芳'},
           {id:20210903001,role:'副班长',class:'1-2',name:'小芳'},
           {id:20210903001,role:'学习委员',class:'1-2',name:'小芳'},
@@ -80,8 +80,9 @@ export default {
     overflow: auto;
   }
 }
-h4,h5 {
-  margin: 0px;
+.title {
+  font-size: 20px;
+  font-weight: bold;
   text-align: center;
 }
 p {

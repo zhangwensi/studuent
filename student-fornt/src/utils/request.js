@@ -14,7 +14,7 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 const service = axios.create({
   // 配置的后端地址
   // baseURL: process.env.VUE_APP_BASE_API,
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'http://139.196.178.250:3017/api' || 'http://localhost:3000/api',
   // 超时时间
   timeout: 10000
 })

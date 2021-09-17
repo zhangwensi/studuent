@@ -62,7 +62,7 @@ const publicRoutes = [
         name:'userInfo',
         meta:{
           icon:'',
-          name:"用户信息",
+          name:"学生信息",
         }
       }
     ]

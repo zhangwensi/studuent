@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-table
-      :data="tableData"
+      :data="tableList"
       border
       style="width: 100%">
-      <template v-for="(item,index) in tableType">
+      <template v-for="(item,index) in tableTypes">
         <el-table-column
         :key="index"
         :prop="item.prop"
@@ -31,8 +31,8 @@ export default {
   },
   data() {
     return {
-      tableType:[],
-      tableData: []
+      tableTypes:[],
+      tableList: []
     }
   },
   mounted(){
@@ -41,8 +41,8 @@ export default {
   },
   methods:{
     getTableData() {
-      this.tableType = this.$props.tableType,
-      this.tableData = this.$props.tableData
+      this.tableTypes = this.$props.tableType,
+      this.tableList = this.$props.tableData
     }
   }
 }

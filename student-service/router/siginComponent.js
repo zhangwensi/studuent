@@ -15,6 +15,7 @@
     let phone = ctx.request.body.phone
     let birth = ctx.request.body.birth
     let address = ctx.request.body.address
+    let patriarch = ctx.request.body.patriarch
     let sql = `select * from sginList where username='${username}' and sclass= '${sclass}' and birth = '${birth}'`
     let findResulet = await new Promise((resolve,reject)=>{
         try {
@@ -33,8 +34,8 @@
         }
     })
     if(!findResulet.length>0) {
-        let sqlInsert = `insert into sginList (username,sclass,grader,phone,birth,address) values ('${username}',
-        '${sclass}','${grader}','${phone}','${birth}','${address}')`
+        let sqlInsert = `insert into sginList (username,sclass,grader,phone,birth,address,patriarch) values ('${username}',
+        '${sclass}','${grader}','${phone}','${birth}','${address}','${patriarch}')`
         let insertResulet = await new Promise((resolve,reject)=>{
             try {
                 return db.query(sqlInsert,(err,data)=>{
@@ -58,7 +59,8 @@
                     username: username,
                     sclass: sclass,
                     grader: grader,
-                    phone: phone
+                    phone: phone,
+                    patriarch: patriarch
                 },
                 msg:'提交成功'
             }
@@ -71,7 +73,7 @@
         }
     } else {
         let updateSql = `update sginList set  sclass= '${sclass}',birth = '${birth}',grader = '${grader}',phone = '${phone}',
-        address = '${address}' where username='${username}'`
+        address = '${address}', patriarch = '${patriarch}' where username='${username}'`
         let updateResulet = await new Promise((resolve,reject)=>{
             try {
                 return db.query(updateSql,(err,data)=>{

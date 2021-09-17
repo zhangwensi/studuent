@@ -1,7 +1,7 @@
 <template>
   <div>
     <breadComponents :pathArr="breadList"/>
-    <tableComponent :tableData="tableData" :tableType="tableConfig"/>
+    <tableComponent :tableData="tableList" :tableType="tableConfig"/>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       breadList:['信息管理','用户信息列表'],
-      tableData:[{
+      tableList:[{
           date: '2016-05-02',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄'

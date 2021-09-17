@@ -1,7 +1,7 @@
 <template>
   <div class="login-box">
     <div class="box-wrapper">
-      <h1>学生管理系统</h1>
+      <span class="title">学生管理系统</span>
       <el-form :model="ruleForm" status-icon :rules="loginRules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="usename">
           <el-input type="text" v-model="ruleForm.usename" autocomplete="off"></el-input>
@@ -60,6 +60,7 @@ export default {
 <style lang="scss" scoped>
 .login-box {
   background: url('../assets/image/loginbg.jpg') no-repeat fixed;
+  background-size: 100% 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
@@ -67,14 +68,17 @@ export default {
   .box-wrapper {
     width: 400px;
     height: 300px;
-    padding: 0px 20px;
+    padding: 20px;
     background: rgba(255,255,255,0.1);
     border-radius: 10px;
     text-align: center;
   }
-  h1 {
+  .title {
     text-align: center;
     color: cornsilk;
+  }
+  .demo-ruleForm {
+    margin-top: 20px;
   }
 }
 </style>
