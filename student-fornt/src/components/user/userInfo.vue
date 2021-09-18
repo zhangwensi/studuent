@@ -3,16 +3,17 @@
     <breadComponents :pathArr="breadList"/>
     <tablePlus :config="table_config" @sizeChange="fsizeChange"
     @btnClick="fbtnClick"
-    @currentChange="fcurrentSize" @statte="changeState"/>
+    @currentChange="fcurrentSize" @statte="changeState" @downSource="exportExcel"/>
     <myDialog :dialogCfg="dialog_config" :aVisible.sync="isAVisible" @dialogClose="hasClose" @submit="userSubmit"/>
   </div>
 </template>
 
 <script>
-import {getStudentData} from '../../api/studentInfo/studentInfo'
+import {getStudentData,exportExcel} from '../../api/studentInfo/studentInfo'
 import breadComponents from '../breadComponents.vue'
 import tablePlus from '../tablePlus.vue'
 import myDialog from '../Dialog.vue'
+import { export2Excel } from '@/utils/export'
 export default {
   name: 'userInfo',
   components:{breadComponents,tablePlus,myDialog},
@@ -51,6 +52,7 @@ export default {
       // 弹窗配置
       isAVisible: false,
       dialog_config:{
+        title:'',
         type:null, //删除或者编辑
         data:null, // 弹窗数据
         formItem:[
@@ -87,18 +89,24 @@ export default {
     fsizeChange(val) {
       this.table_config.data.pageSize = val
       this.initTable()
-      console.log(val)
     },
     fcurrentSize(val) {
       this.table_config.data.currentPage = val
       this.initTable()
     },
     changeState(val) {
+      // 本模块不需要变更用户状态
       console.log(val)
     },
     fbtnClick(val,val2) {
       this.isAVisible = true
-      this.dialog_config.type = val2
+      if(val2 === 'editor') {
+        this.dialog_config.title="【编辑】(请完善信息后再提交，不要留空！)"
+        this.dialog_config.type = val2
+      } else {
+        this.dialog_config.title="【删除】学生信息"
+        this.dialog_config.type = val2
+      }
       this.dialog_config.data = val
     },
     hasClose() {
@@ -108,10 +116,32 @@ export default {
       // 提交操作
       console.log(val)
       if(val.submitType === 'editor') {
-        // 执行编辑操作后 需要传入当前页码后再获取信息
+        // 执行编辑操作后 需要传入当前页码后再获取信息 再关闭弹窗
       } else {
-        // 执行删除操作后 需要传入当前页码后再获取信息
+        // 执行删除操作后 需要传入当前页码后再获取信息 再关闭弹窗
       }
+    },
+    exportExcel() {
+      console.log('1111')
+      let info = {
+        sclass : 1, //根据登录者的角色进行定义
+        grader : 2, //根据登录者的角色进行定义
+      }
+      let exportList = []
+      exportExcel(info).then(res =>{
+        // const { export_json_to_excel } = require('../../excel/Export2Excel')
+        // const tHeader = ['学生姓名','']
+        // if(res.code === 200){
+        //   exportList = this.formatList(res.data)
+        //   export2Excel(this.columns1,exportList)
+        // }
+        // else if (res.code !== 200 ){
+        //   this.$Message.info('数据太多无法导出，请联系客服！')
+        // }
+      })
+    },
+    formatList(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]))
     }
   }
 }

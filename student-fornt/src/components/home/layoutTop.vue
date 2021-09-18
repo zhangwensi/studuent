@@ -9,11 +9,11 @@
           <div><svg-icon class="user-info" iconClass="users"></svg-icon></div>
           <div>{{username}}</div>
           <div>
-            <el-dropdown trigger="click">
-              <svg-icon class="logout" iconClass="logout"></svg-icon>
+            <el-dropdown @command="handleCommand" trigger="click">
+              <div class="btn"><svg-icon class="logout" iconClass="logout"></svg-icon></div>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>退出</el-dropdown-item>
-                <el-dropdown-item>注销</el-dropdown-item>
+                <el-dropdown-item command="logOut">退出</el-dropdown-item>
+                <!-- <el-dropdown-item>注销</el-dropdown-item> -->
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -35,7 +35,11 @@ export default {
   methods: {
     ...mapMutations({
       changeSidler: 'app/SET_COLLAPSE_STATUS'
-    })
+    }),
+    handleCommand(command) {
+      this.$router.push('/login')
+      this.$message('退出系统');
+    }
   }
 }
 </script>
@@ -87,5 +91,8 @@ export default {
   .uese-top {
     left: $minWidth;
   }
+}
+.btn {
+  cursor: pointer;
 }
 </style>

@@ -9,17 +9,15 @@
 </template>
 
 <script>
-import layoutTop from '@/components/home/layoutTop'
-import layoutLeft from '@/components/home/layoutLeft'
-import layoutContainer from '@/components/home/layoutContainer'
+import layoutTop from '@/components/home/layoutTop.vue'
+import layoutLeft from '@/components/home/layoutLeft.vue'
+import layoutContainer from '@/components/home/layoutContainer.vue'
 import {mapGetters} from 'vuex'
 export default {
   name:"home",
   components:{layoutTop,layoutLeft,layoutContainer},
   data() {
-    return {
-
-    }
+    return {}
   },
   computed:{
     ...mapGetters({

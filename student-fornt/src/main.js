@@ -7,6 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import "./assets/styles/global.scss"
 import '@/assets/icons'
 import './utils/rem.js'
+import Blob from './excel/Blob'
+import Export2Excel from './excel/Export2Excel'
 
 Vue.use(Element)
 Vue.config.productionTip = false
@@ -14,5 +16,7 @@ Vue.config.productionTip = false
 new Vue({
   store,
   router,
+  Blob,
+  Export2Excel,
   render: h => h(App),
 }).$mount('#app')

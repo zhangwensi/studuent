@@ -7,3 +7,13 @@ export function getStudentData(data) {
     data
   })
 }
+
+//导出数据接口
+
+export function exportExcel(data) {
+  return service.request({
+    method: 'POST',
+    url:'/excelData',
+    data
+  })
+}

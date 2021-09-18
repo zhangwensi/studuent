@@ -4,7 +4,10 @@
   :element-loading-text="loadingText"
   class="table-default"
   >
-  <!-- 封装表格 -->
+  <!-- 导出表格数据 -->
+  <div class="table-title fr">
+    <el-button type="primary" size="mini" @click="downLoad()">导出数据</el-button>
+  </div>
   <!-- 插槽表格 -->
    <el-table
    :data="initConfig.tableList" border :size="initConfig.size" :height="initConfig.tableHeight">
@@ -79,7 +82,7 @@ export default {
         btn:[],
         size:'medium',
         pagination: true,
-        tableHeight: '',
+        tableHeight: null,
       }
     }
   },
@@ -123,6 +126,10 @@ export default {
     // 通知父组件当前页数变化 重新请求后台数据
     handleCurrentChange(val) {
       this.$emit('currentChange',val)
+    },
+    // 导出数据考虑放到父组件
+    downLoad(){
+      this.$emit('downSource')
     }
   }
 }
@@ -131,5 +138,10 @@ export default {
 <style lang="scss" scoped>
 .tablePg {
   margin-top: 20px;
+  .table-title {
+    text-align: end;
+    height: 18px;
+    margin-bottom: 2px;
+  }
 }
 </style>

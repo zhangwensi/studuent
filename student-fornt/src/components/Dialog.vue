@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      :title="initCfg.type ==='editor'?'【编辑】(请完善信息后再提交，不要留空！)':'【删除】学生信息'"
+      :title="initCfg.title"
       :visible.sync="dialogVisible"
       width="30%"
       :append-to-body="true"
@@ -10,15 +10,22 @@
       :close-on-press-escape="false"
       @open="open"
       :before-close="handleClose">
-      <template v-if="initCfg.type ==='editor'? true: false">
+      <template v-if="initCfg.type ==='editor'">
         <el-form v-model="ruleForm" ref="ruleFormRef" label-width="80px" class="demo-form-inline">
           <el-form-item v-for="item in keys" :key="item.keyType" :label="item.label">
             <el-input v-model="ruleForm[item.keyType]" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
       </template>
-      <template v-if="initCfg.type ==='delete'? true: false">
+      <template v-else-if="initCfg.type ==='delete'">
         <div>是否要删除【{{ruleForm.username}}】的个人信息？</div>
+      </template>
+      <template v-else>
+        <el-form v-model="addRuleFrom" ref="addRuleFormRef" label-width="80px" class="demo-form-inline">
+          <el-form-item v-for="item in keys" :key="item.keyType" :label="item.label">
+            <el-input v-model="addRuleFrom[item.keyType]" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
       </template>
       <span slot="footer" class="dialog-footer">
         <el-button size="mini" @click="handleClose">取 消</el-button>
@@ -45,13 +52,15 @@ export default {
     return {
       dialogVisible: false,
       initCfg:{
+        title:'',
         type:'',
         data:null,
         formItem:[]
       },
       keys:[],//编辑时的关键字
       ruleForm:{},
-      rules:[]
+      rules:[],
+      addRuleFrom:{},
     }
   },
   watch:{
@@ -59,13 +68,25 @@ export default {
       handler(newValue) {
         this.dialogVisible = newValue
       }
+    },
+    dialogCfg: {
+      handler(newValue) {
+        console.log(newValue)
+      },
+      immediate: true,
+      deep: true
     }
   },
   methods: {
     // 初始化弹窗配置
     initDilog(){
+      if(this.dialogCfg.type === 'add') {
+        this.addRuleFrom = this.dialogCfg.data
+      } else {
+        this.ruleForm = this.dialogCfg.data
+      }
+      this.initCfg.title = this.dialogCfg.title
       this.initCfg.type = this.dialogCfg.type
-      this.ruleForm = this.dialogCfg.data
       this.keys = this.dialogCfg.formItem
     },
     // 关闭弹窗
