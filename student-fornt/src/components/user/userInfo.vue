@@ -3,7 +3,7 @@
     <breadComponents :pathArr="breadList"/>
     <tablePlus :config="table_config" @sizeChange="fsizeChange"
     @btnClick="fbtnClick"
-    @currentChange="fcurrentSize" @statte="changeState" @downSource="exportExcel"/>
+    @currentChange="fcurrentSize" @statte="changeState" @downSource="outExcel"/>
     <myDialog :dialogCfg="dialog_config" :aVisible.sync="isAVisible" @dialogClose="hasClose" @submit="userSubmit"/>
   </div>
 </template>
@@ -13,7 +13,8 @@ import {getStudentData,exportExcel} from '../../api/studentInfo/studentInfo'
 import breadComponents from '../breadComponents.vue'
 import tablePlus from '../tablePlus.vue'
 import myDialog from '../Dialog.vue'
-import { export2Excel } from '@/utils/export'
+import 'moment'
+// import { export2Excel } from '@/utils/export'
 export default {
   name: 'userInfo',
   components:{breadComponents,tablePlus,myDialog},
@@ -21,6 +22,7 @@ export default {
     return {
       breadList:['信息管理','学生信息'],
       table_config:{
+        downShow: true,
         tableTh:[
           {prop:"id",label:"序号",type:'index',callback:id=>id+1},
           {prop:"username",label:"学生姓名"},
@@ -48,6 +50,7 @@ export default {
         ],
         pagination: true,
         size:'',
+        excelData: [] //导出表格的数据
       },
       // 弹窗配置
       isAVisible: false,
@@ -121,26 +124,41 @@ export default {
         // 执行删除操作后 需要传入当前页码后再获取信息 再关闭弹窗
       }
     },
-    exportExcel() {
+    outExcel() {
       console.log('1111')
       let info = {
         sclass : 1, //根据登录者的角色进行定义
         grader : 2, //根据登录者的角色进行定义
       }
-      let exportList = []
       exportExcel(info).then(res =>{
-        // const { export_json_to_excel } = require('../../excel/Export2Excel')
-        // const tHeader = ['学生姓名','']
-        // if(res.code === 200){
-        //   exportList = this.formatList(res.data)
-        //   export2Excel(this.columns1,exportList)
-        // }
-        // else if (res.code !== 200 ){
-        //   this.$Message.info('数据太多无法导出，请联系客服！')
-        // }
+        if(res.code === 200){
+          this.excelData = res.data
+          this.export2Excel()
+        }
+        else if (res.code !== 200 ){
+          this.$Message.info('数据太多无法导出，请联系客服！')
+        }
       })
     },
-    formatList(filterVal, jsonData) {
+    export2Excel() {
+      var that = this;
+      require.ensure([], () => {
+          const { export_json_to_excel } = require('../../excel/Export2Excel'); //这里必须使用绝对路径
+          const tHeader = ['编号','学生姓名','年级', '班级','联系电话','出生日期','家庭地址','家长姓名']; // 导出的表头名
+          const filterVal = ['id','username', 'sclass', 'grader','phone','birth','address','patriarch']; // 导出的表头字段名
+          const list = that.excelData;
+          const data = that.formatJson(filterVal, list);
+          // let time1,time2 = '';
+          // if(this.start !== '') {
+          //     time1 = that.moment(that.start).format('YYYY-MM-DD')
+          // }
+          // if(this.end !== '') {
+          //     time2 = that.moment(that.end).format('YYYY-MM-DD')
+          // }
+          export_json_to_excel(tHeader, data, `学生信息明细`);// 导出的表格名称，根据需要自己命名
+      })
+    },
+    formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
     }
   }

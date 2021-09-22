@@ -6,6 +6,7 @@ const exportData = new Router()
 exportData.post('/',koaBody(),async (ctx) => {
     let sclass = ctx.request.body.sclass
     let grader = ctx.request.body.grader
+    console.log('111'+ctx)
     let sql = `select * from sginList where sclass= '${sclass}' and grader = '${grader}'`
     let result = await new Promise((resolve,reject) => {
         return db.query(sql,(err,data)=>{

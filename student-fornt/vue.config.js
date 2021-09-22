@@ -33,7 +33,8 @@ module.exports={
     name: title,
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': resolve('src'),
+        'excel': path.resolve(__dirname, '../src/excel')
       }
     }
   },

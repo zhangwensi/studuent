@@ -5,7 +5,7 @@
   class="table-default"
   >
   <!-- 导出表格数据 -->
-  <div class="table-title fr">
+  <div v-if="initConfig.downShow" class="table-title fr">
     <el-button type="primary" size="mini" @click="downLoad()">导出数据</el-button>
   </div>
   <!-- 插槽表格 -->
@@ -75,6 +75,7 @@ export default {
       loadingText:'数据正在疯狂赶来',
       initConfig:{
         // 表头
+        downShow: false,
         tableTh:[],
         tableList:[],
         checkbox: true,

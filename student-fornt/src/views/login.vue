@@ -47,8 +47,17 @@ export default {
       if(data.username !== null && data.password !== null) {
         login(data).then(res=>{
           if(res.code === 200) {
-            this.$router.push('/home')
+            // 设置token
+            let token = res.data.token
+            let grader = res.data.grader
+            let sclass = res.data.sclass
+            let username = res.data.username
             this.$store.commit('app/SET_COLLAPSE_STATUS')
+            this.$store.commit('app/SET_USER_TOKEN',token)
+            this.$store.commit('app/SET_USER_USERNAME',username)
+            this.$store.commit('app/SET_USER_GRADER',grader)
+            this.$store.commit('app/SET_USER_SCLASS',sclass)
+            this.$router.push('/home')
           }
         })
       }

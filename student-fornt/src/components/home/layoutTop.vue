@@ -7,7 +7,7 @@
       <div class="fr">
         <div class="user-box">
           <div><svg-icon class="user-info" iconClass="users"></svg-icon></div>
-          <div>{{username}}</div>
+          <div class="user-name">{{username}}</div>
           <div>
             <el-dropdown @command="handleCommand" trigger="click">
               <div class="btn"><svg-icon class="logout" iconClass="logout"></svg-icon></div>
@@ -24,21 +24,30 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState,mapMutations } from 'vuex'
 export default {
   name: "layoutTop",
   data() {
     return {
-      username: 'admin'
+      // username: 'admin'
     }
   },
+  computed:mapState({
+    username: () => {
+      return sessionStorage.getItem('username')
+    }
+  }),
   methods: {
     ...mapMutations({
-      changeSidler: 'app/SET_COLLAPSE_STATUS'
+      changeSidler: 'app/SET_COLLAPSE_STATUS',
     }),
     handleCommand(command) {
       this.$router.push('/login')
-      this.$message('退出系统');
+      sessionStorage.removeItem('isCollapse')
+      sessionStorage.removeItem('username')
+      sessionStorage.removeItem('grader')
+      sessionStorage.removeItem('sclass')
+      this.$message('退出系统')
     }
   }
 }
@@ -94,5 +103,9 @@ export default {
 }
 .btn {
   cursor: pointer;
+}
+.user-name {
+  font-size: 32px;
+  color: #ccc;
 }
 </style>

@@ -33,7 +33,7 @@ login.post('/',koaBody(), async (ctx) => {
             let userToken = jsonwebtoken.sign({
                 name: result[0].username, id:result[0].id},
                 SECRET,
-                { expiresIn: '0.5h' }
+                { expiresIn: '4h' }
             )
             ctx.body ={
                 code: 200,
@@ -41,6 +41,8 @@ login.post('/',koaBody(), async (ctx) => {
                     username: result[0].username,
                     role: result[0].role,
                     realname: result[0].realname,
+                    sclass: result[0].sclass,
+                    grader: result[0].grader,
                     token:userToken
                 },
                 msg:"登录成功"

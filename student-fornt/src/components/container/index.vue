@@ -32,7 +32,7 @@ export default {
   components:{breadComponent,timeTables,tableComponent,addDialog},
   data() {
     return {
-      breadList:['控制台','子选项'],
+      breadList:['班级控制台','班级信息'],
       isAvaliable: false,
       // 增加成员配置
       dialog_config:{

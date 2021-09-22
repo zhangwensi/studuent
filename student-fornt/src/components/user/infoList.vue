@@ -13,7 +13,7 @@ export default {
   components:{breadComponents,tableComponent},
   data() {
     return {
-      breadList:['信息管理','用户信息列表'],
+      breadList:['信息管理','账号管理'],
       tableList:[{
           date: '2016-05-02',
           name: '王小虎',

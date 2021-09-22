@@ -16,7 +16,5 @@ Vue.config.productionTip = false
 new Vue({
   store,
   router,
-  Blob,
-  Export2Excel,
   render: h => h(App),
 }).$mount('#app')

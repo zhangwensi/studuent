@@ -53,7 +53,7 @@ const publicRoutes = [
         name:'infoList',
         meta:{
           icon:'',
-          name:"用户信息列表",
+          name:"账号管理",
         }
       },
       {
