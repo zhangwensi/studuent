@@ -17,3 +17,21 @@ export function exportExcel(data) {
     data
   })
 }
+
+//新增或编辑用户接口
+export function addStudent(data) {
+  return service.request({
+    method: 'POST',
+    url: '/sigin',
+    data
+  })
+}
+
+//删除学生信息接口
+export function deletStudent(data) {
+  return service.request({
+    method: 'POST',
+    url: '/sigin',
+    data
+  })
+}

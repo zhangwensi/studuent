@@ -1,10 +1,19 @@
 <template>
-  <div>typeScore</div>
+  <div>
+    <breadComponents :pathArr="breadList"/>
+  </div>
 </template>
 
 <script>
+import breadComponents from '../breadComponents.vue'
 export default {
-  name: "typeScore"
+  components:{breadComponents},
+  name: "typeScore",
+  data() {
+    return {
+      breadList:['成绩展板','成绩看板'],
+    }
+  }
 }
 </script>
 

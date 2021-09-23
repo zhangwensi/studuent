@@ -29,7 +29,7 @@
       </template>
       <span slot="footer" class="dialog-footer">
         <el-button size="mini" @click="handleClose">取 消</el-button>
-        <el-button size="mini" type="primary" @click="submit">确 定</el-button>
+        <el-button size="mini" type="primary" :loading="initCfg.btnLoading" @click="submit">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -55,12 +55,13 @@ export default {
         title:'',
         type:'',
         data:null,
-        formItem:[]
+        formItem:[],
+        btnLoading: false
       },
       keys:[],//编辑时的关键字
       ruleForm:{},
       rules:[],
-      addRuleFrom:{},
+      addRuleFrom: {},
     }
   },
   watch:{
@@ -71,7 +72,7 @@ export default {
     },
     dialogCfg: {
       handler(newValue) {
-        console.log(newValue)
+        // console.log(newValue)
       },
       immediate: true,
       deep: true
@@ -81,29 +82,41 @@ export default {
     // 初始化弹窗配置
     initDilog(){
       if(this.dialogCfg.type === 'add') {
-        this.addRuleFrom = this.dialogCfg.data
+        this.addRuleFrom = JSON.parse(JSON.stringify(this.dialogCfg.data))
       } else {
-        this.ruleForm = this.dialogCfg.data
+        this.ruleForm = JSON.parse(JSON.stringify(this.dialogCfg.data))
       }
+      console.log(this.dialogCfg)
       this.initCfg.title = this.dialogCfg.title
       this.initCfg.type = this.dialogCfg.type
+      this.initCfg.btnLoading = JSON.parse(JSON.stringify(this.dialogCfg.btnLoading))
       this.keys = this.dialogCfg.formItem
     },
     // 关闭弹窗
     handleClose() {
       this.$emit('dialogClose')
+      this.initCfg.btnLoading = false
     },
     // 打开弹窗并初始化弹窗数据
     open() {
       this.initDilog()
     },
     submit(){
+      this.initCfg.btnLoading = true
       // 等后台接口返回成功后关闭 后面要加上操作类型
-      let editorData = {
-        data: this.ruleForm,
-        submitType: this.initCfg.type
+      if(this.initCfg.type === 'add') {
+          let editorData = {
+            data: this.addRuleFrom,
+            submitType: this.initCfg.type
+          }
+          this.$emit('submit', editorData)
+      } else {
+        let editorData = {
+          data: this.ruleForm,
+          submitType: this.initCfg.type
+        }
+        this.$emit('submit', editorData)
       }
-      this.$emit('submit', editorData)
     }
   }
 }

@@ -7,3 +7,12 @@ export function timeTable(data) {
     data
   })
 }
+
+// 获取班委信息
+export function stuRole(data) {
+  return service.request({
+    method: 'POST',
+    url:'/studentRole',
+    data
+  })
+}
