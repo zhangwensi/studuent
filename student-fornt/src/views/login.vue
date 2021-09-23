@@ -24,7 +24,8 @@ export default {
     return {
       ruleForm:{
         usename:'',
-        password:''
+        password:'',
+        loading: null
       },
       loginRules: {
         usename: [
