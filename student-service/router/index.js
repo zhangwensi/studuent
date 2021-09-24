@@ -7,6 +7,7 @@ const getSiginInfo = require('./getSiginInfo')
 const getData = require('./getData')
 const excelData = require('./exportData')
 const stuRole = require('./studentRole')
+const teacherRole = require('./teacherRole')
 const router = new Router({
     prefix:'/api'
 })
@@ -19,6 +20,7 @@ router.use('/getSiginInfo',getSiginInfo.routes(),getSiginInfo.allowedMethods())
 router.use('/getData',getData.routes(),getData.allowedMethods())
 router.use('/excelData',excelData.routes(),excelData.allowedMethods())
 router.use('/studentRole',stuRole.routes(),stuRole.allowedMethods())
+router.use('/teacherRole',teacherRole.routes(),teacherRole.allowedMethods())
 
 
 module.exports = router

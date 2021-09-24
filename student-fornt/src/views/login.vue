@@ -53,11 +53,13 @@ export default {
             let grader = res.data.grader
             let sclass = res.data.sclass
             let username = res.data.username
+            let role = res.data.role
             this.$store.commit('app/SET_COLLAPSE_STATUS')
             this.$store.commit('app/SET_USER_TOKEN',token)
             this.$store.commit('app/SET_USER_USERNAME',username)
             this.$store.commit('app/SET_USER_GRADER',grader)
             this.$store.commit('app/SET_USER_SCLASS',sclass)
+            this.$store.commit('app/SET_USER_ROLE',role)
             this.$router.push('/home')
           }
         })

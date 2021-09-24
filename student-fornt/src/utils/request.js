@@ -19,7 +19,6 @@ const service = axios.create({
   timeout: 10000
 })
 
-
 service.interceptors.request.use(config => {
   // 是否设置token
   const isToken = (config.headers || {}).isToken === false

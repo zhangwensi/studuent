@@ -1,15 +1,14 @@
 <template>
-  <div
-  v-loading="loading"
-  :element-loading-text="loadingText"
-  class="table-default"
-  >
+  <div class="table-default">
   <!-- 导出表格数据 -->
   <div v-if="initConfig.downShow" class="table-title fr">
     <el-button type="primary" size="mini" @click="downLoad()">导出数据</el-button>
   </div>
   <!-- 插槽表格 -->
-   <el-table
+   <el-table v-loading="initConfig.loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
    :data="initConfig.tableList" border :size="initConfig.size" :height="initConfig.tableHeight">
     <!-- 表头 -->
     <el-table-column fixed v-if="initConfig.checkbox" type="selection" width="55"></el-table-column>
@@ -35,7 +34,14 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column v-else-if="item.type !=='function'" :prop="item.prop" :label="item.label" :key="item.label" align="center"></el-table-column>
+      <el-table-column v-else-if="item.type === 'tag'" :prop="item.prop" :label="item.label" :key="item.label" align="center">
+        <template slot-scope="scope" >
+          <el-tag :type="scope.row.tag === '0' ? 'success' : 'danger'">{{scope.row.tag === '0' ? '启用' : '禁用'}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column v-else-if="item.type !=='function'" :prop="item.prop" :label="item.label" :key="item.label" align="center">
+      </el-table-column>
+      <!-- 标签tag -->
     </template>
    </el-table>
    <!-- 分页 -->
@@ -71,8 +77,6 @@ export default {
   data(){
     return{
       // 表格配置
-      loading:false,
-      loadingText:'数据正在疯狂赶来',
       initConfig:{
         // 表头
         downShow: false,
@@ -84,6 +88,7 @@ export default {
         size:'medium',
         pagination: true,
         tableHeight: null,
+        loading: false,
       }
     }
   },
@@ -99,16 +104,16 @@ export default {
     }
   },
   created(){
+  },
+  mounted(){
 
   },
   methods:{
     // 将父组件传值的数据 重新绑定至组件内，避免直接使用prop时 受干扰
     initTableData(){
-      this.loading = true
       for(let key in this.config) {
         if(Object.keys(this.initConfig).includes(key)) {
           this.initConfig[key] = this.config[key]
-          this.loading = false
         }
       }
     },
@@ -118,7 +123,7 @@ export default {
     },
     // 通知父级组件对于目标数据状态已改变
     switchChange(val){
-      this.$emit('statte',val)
+      this.$emit('status',val)
     },
     // 通知父组件显示页数变化 重新请求后台数据
     handleSizeChange(val) {

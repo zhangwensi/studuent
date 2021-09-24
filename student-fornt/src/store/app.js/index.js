@@ -6,6 +6,7 @@ const state = {
     username: null,
     sclass: null,
     grader: null,
+    role: null
   }
 const getters = {
   GET_COLLAPSE_STATUS: (state) => {
@@ -34,6 +35,10 @@ const mutations = {
   SET_USER_GRADER: (state,paylod) => {
     state.grader = paylod
     JSON.stringify(sessionStorage.setItem('grader',state.grader))
+  },
+  SET_USER_ROLE: (state,paylod) => {
+    state.role = paylod
+    JSON.stringify(sessionStorage.setItem('role',state.role))
   }
 }
 const actions = {

@@ -5,7 +5,7 @@
     <div class="fl"><el-button  type="danger" size="mini" @click.prevent="addInfo">新增</el-button></div>
     <tablePlus :config="table_config" @sizeChange="fsizeChange"
     @btnClick="fbtnClick"
-    @currentChange="fcurrentSize" @statte="changeState" @downSource="outExcel"/>
+    @currentChange="fcurrentSize" @status="changeState" @downSource="outExcel"/>
     <myDialog :dialogCfg="dialog_config" :aVisible.sync="isAVisible" @dialogClose="hasClose" @submit="userSubmit"/>
     <myDialog :dialogCfg="addDialog" :aVisible.sync="isAddAVisible" @dialogClose="hasAddClose" @submit="addUserSubmit"/>
   </div>
@@ -25,11 +25,13 @@ export default {
     return {
       breadList:['信息管理','学生信息'],
       table_config:{
+        loading: false,
         downShow: true,
         checkbox: false,
         tableTh:[
           {prop:"id",label:"序号",type:'index',callback:id=>id+1},
           {prop:"username",label:"学生姓名"},
+          {prop:"sex",label:"性别"},
           {prop:"sclass",label:"年级"},
           {prop:"grader",label:"班级"},
           {prop:"phone",label:"联系电话"},
@@ -65,6 +67,7 @@ export default {
         data:null, // 弹窗数据
         formItem:[
           {keyType:"username",label:"学生姓名"},
+          {keyType:"sex",label:"性别"},
           // {keyType:"sclass",label:"年级"},
           // {keyType:"grader",label:"班级"},
           {keyType:"phone",label:"联系电话"},
@@ -81,6 +84,7 @@ export default {
         data: {},
         formItem:[
           {keyType:"username",label:"学生姓名"},
+          {keyType:"sex",label:"性别"},
           {keyType:"phone",label:"联系电话"},
           {keyType:"birth",label:"出生日期"},
           {keyType:"patriarch",label:"家长姓名"},
@@ -96,6 +100,7 @@ export default {
   methods:{
     // 初始化表格
     initTable(){
+      this.table_config.loading = true
       let reqData = {
         sclass : sessionStorage.getItem('sclass'), //根据登录者的角色进行定义
         grader : sessionStorage.getItem('grader'), //根据登录者的角色进行定义
@@ -107,6 +112,8 @@ export default {
           this.table_config.tableList = res.data
           this.table_config.data.total = res.total
         }
+      }).finally(()=>{
+        this.table_config.loading = false
       })
     },
     fsizeChange(val) {
@@ -150,7 +157,8 @@ export default {
           birth: val.data.birth,
           phone: val.data.phone,
           address: val.data.address,
-          patriarch: val.data.patriarch
+          patriarch: val.data.patriarch,
+          sex: val.data.sex
         }
         addStudent(reqData).then(res=>{
           if(res.code === 200) {
@@ -180,7 +188,6 @@ export default {
       this.isAVisible = false
     },
     addUserSubmit(val) {
-      console.log(val)
       // 执行添加操作 需要传入当前页码后再获取信息 再关闭弹窗
       let reqData = {
         username: val.data.username,
@@ -189,7 +196,8 @@ export default {
         birth: val.data.birth,
         phone: val.data.phone,
         address: val.data.address,
-        patriarch: val.data.patriarch
+        patriarch: val.data.patriarch,
+        sex: val.data.sex
       }
       addStudent(reqData).then(res=>{
         if(res.code === 200) {
@@ -226,8 +234,8 @@ export default {
       var that = this;
       require.ensure([], () => {
           const { export_json_to_excel } = require('../../excel/Export2Excel'); //这里必须使用绝对路径
-          const tHeader = ['编号','学生姓名','年级', '班级','联系电话','出生日期','家庭地址','家长姓名']; // 导出的表头名
-          const filterVal = ['id','username', 'sclass', 'grader','phone','birth','address','patriarch']; // 导出的表头字段名
+          const tHeader = ['编号','学生姓名','性别','年级', '班级','联系电话','出生日期','家庭地址','家长姓名']; // 导出的表头名
+          const filterVal = ['id','username','sex', 'sclass', 'grader','phone','birth','address','patriarch']; // 导出的表头字段名
           const list = that.excelData;
           const data = that.formatJson(filterVal, list);
           let sclass = sessionStorage.getItem('sclass')
