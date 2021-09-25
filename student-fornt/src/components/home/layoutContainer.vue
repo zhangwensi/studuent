@@ -24,6 +24,9 @@ export default {
   padding: 20px;
   height: 100%;
   overflow: auto;
+  .main-inner {
+    height: 100%;
+  }
 }
 .close {
   .main-container {
